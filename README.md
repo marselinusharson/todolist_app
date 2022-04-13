@@ -15,3 +15,5 @@ Aplikasi terdiri dari beberapa layer
    Repository adalah layer yang akan mengelola data dari Entity. TodolistRepository adalah sebuah interface yang dienkapsulasi dalam namespace Repository. Interface ini memiliki 3 fungsi didalamnya yaitu save() untuk menyimpan data array ke entity, remove() untuk menghapus data dari entity dan findAll() untuk mengambil semua data yang ada di todolist atau entitynya.
    TodolistRepositoryImpl adalah class turunan yang mengimplementasi interface TodolistRepository.
    class TodolistRepositoryImpl memiliki properti berupa array dengan visibility private.
+3. Service
+   layer Service berisi aksi-aksi untuk aplikasinya. sebagai business logic idealnya dibuat dalam bentuk interface yang dienkapsulasi dalam namespace Service.
