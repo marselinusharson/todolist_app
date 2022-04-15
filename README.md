@@ -9,7 +9,7 @@ Aplikasi terdiri dari beberapa layer
 1. Entity
 
    merupakan inti dari aplikasi atau datanya
-   dalam hal ini entity adalah Todolist alias Todolist.php .
+   dalam hal ini entity adalah Todolist alias <a href="Entity/Todolist.php">Todolist.php</a> .
    Class Todolist dienkaplulasi dalam namespace Entity dan memiliki properti $todo dengan visibility private. Selanjutnya memiliki argumen berupa string dengan default value string kosong yang akan menerima data todo yang dikirim saat pembuatan objeknya.
    Agar objek instance nya dapat mengakses private properties dari class Todolist maka ditambahkan magic function getter untuk mendapatkan properti dan setter untuk mengubah data pada properti
 
@@ -19,3 +19,5 @@ Aplikasi terdiri dari beberapa layer
    class TodolistRepositoryImpl memiliki properti berupa array dengan visibility private.
 3. Service
    layer Service berisi aksi-aksi untuk aplikasinya. sebagai business logic idealnya dibuat dalam bentuk interface yang dienkapsulasi dalam namespace Service.
+4. View 
+   sebagai layer tampilan saat aplikasi dijalankan. yang terdiri dari tampilan awal aplikasi, tampilan saat menu tambah dan menu hapus.
