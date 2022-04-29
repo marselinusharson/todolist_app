@@ -11,7 +11,7 @@ namespace Repository{
     
     class TodolistRepositoryImpl implements TodolistRepository{
 
-        public  array $todolist = array();
+        private  array $todolist = array();
 
         function findAll():array{
             return $this->todolist;
