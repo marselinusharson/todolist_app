@@ -1,49 +1,59 @@
 <?php
-namespace View{
-    use Service\TodolistService;
-    use Helper\InputHelper;
-    class TodolistView{
 
-        public function __construct(private TodolistService $todolistService)
-        {
-            $this->todolistService = $todolistService;
+namespace View{
+    use Service\TodolistService; 
+    use Helper\InputHelper;
+
+    class todolistView{
+
+        public function __construct(private TodolistService  $todolistService){
+
         }
-        function showTodoList(): void{
-            while (true){
-               $this->todolistService->showTodolist();
+
+        function showTodolist(): void{
+            while(true){
+                $this->todolistService->showTodolist();
                 echo "MENU".PHP_EOL;
-                echo "[1] Menambah todo".PHP_EOL;
-                echo "[2] Menghapus todo".PHP_EOL;
-                echo "[x] keluar".PHP_EOL;
-                $pilihan = InputHelper::input("Pilih");
+                echo "[1] Menambah Todo".PHP_EOL;
+                echo "[2] Menghapus Todo".PHP_EOL;
+                echo "[x] Keluar dari aplikasi".PHP_EOL;
+
+
+                $pilihan = InputHelper::input("pilih");
                 if($pilihan == "1"){
                     $this->addTodolist();
                 }else if($pilihan == "2"){
                     $this->removeTodolist();
                 }else if($pilihan == "x"){
                     break;
+
                 }else{
-                    echo "WARNING!! Input tidak sesuai".PHP_EOL;
+                    echo "input salah".PHP_EOL;    
                 }
+                
+
             }
-            echo "Sampai Jumpa".PHP_EOL;
+            echo "\nSAMPAI JUMPA".PHP_EOL;
+
+
         }
-        
-        function addTodolist(): void{
-                echo "Tambah Todo".PHP_EOL;
-                $todo = InputHelper::input ("input Todo ([x] jika ingin batal)");
-                if($todo == "x"){
-                    echo "todo tidak ditambahkan".PHP_EOL;
-                }else{
-                    $this->todolistService->addTodolist($todo);
-                }
-        
+        function addTodolist(){
+            echo "-TAMBAH TODO-".PHP_EOL;
+
+            $pilihan = InputHelper::input("tambahkan todo, klik [x] untuk batal");
+            if($pilihan == 'x'){
+                echo "BATAL MENAMBAH TODO".PHP_EOL;
+            }else{
+                $this->todolistService->addTodolist($pilihan);
+            }
         }
-        function removeTodolist(): void{
-            echo "Menghapus Todo".PHP_EOL;
-            $pilihan = InputHelper::input("select nomor todo (press [x] jika ingin batal menghapus) ");
+        function removeTodolist():void{
+            echo "-MENGHAPUS TODO-".PHP_EOL;
+
+            $pilihan = InputHelper::input("input index todo [x] untuk batal");
+
             if($pilihan == "x"){
-                echo "Penghapusan dibatalkan".PHP_EOL;
+                echo "BATAL MENGHAPUS TODO".PHP_EOL;
             }else{
                 $this->todolistService->removeTodolist($pilihan);
             }
