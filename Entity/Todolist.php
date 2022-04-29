@@ -1,7 +1,5 @@
 <?php 
-
 namespace Entity{
-
     class Todolist{
 
         public function __construct(private string $todo = ""){
