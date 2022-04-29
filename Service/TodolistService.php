@@ -4,11 +4,11 @@ namespace Service{
     use Entity\Todolist;
     use Repository\TodolistRepository;
     interface TodolistService{
-        // public function addTodolist(Todolist $todo):void;
+        public function addTodolist(string $todo):void;
         public function showTodolist():void;
-        // public function removeTodolist():void;
+        public function removeTodolist(int $idx):void;
     }
-
+    
     class TodolistServiceImpl implements TodolistService{
         public function __construct(private TodolistRepository $todolistRepository){
 
@@ -22,6 +22,18 @@ namespace Service{
             }
         }
 
+        public function addTodolist(string $todo):void{
+            $todolist = new Todolist($todo);
+            $this->todolistRepository->save($todolist);
+        }
 
+        public function removeTodolist(int $idx):void{
+            if($this->todolistRepository->remove($idx)){
+                echo "TODOLIST BERHASIL DIHAPUS".PHP_EOL;
+            }else{
+                
+                echo "TODOLIST GAGAL DIHAPUS".PHP_EOL;
+            }
+        }
     }
 }
