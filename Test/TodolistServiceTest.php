@@ -17,4 +17,15 @@ function testShowTodolist(): void{
     
     $todolistService->showTodolist();
 }
-testShowTodolist();
+// testShowTodolist();
+
+function testAddTodolist(): void{
+    $todolistRepository = new TodolistRepositoryImpl();
+    $todolistService = new TodolistServiceImpl($todolistRepository);
+    $todolistService->addTodolist("main bola");
+    $todolistService->addTodolist("Belajar PHP");
+    $todolistService->addTodolist("Belajar Database");
+    $todolistService->showTodolist();
+
+}
+testAddTodolist();

@@ -11,14 +11,14 @@ namespace Repository{
     
     class TodolistRepositoryImpl implements TodolistRepository{
 
-        private  array $todolist = array();
+        public  array $todolist = array();
 
         function findAll():array{
             return $this->todolist;
         }
         function save(Todolist $todolist): void{
             // menyiman todo yang dimasukkan ke ahir dari elemen array
-            $item = sizeof($this->todolist) + 1;//variabel temporary
+            $item = sizeof($this->todolist) + 1; //variabel temporary
             $this->todolist[$item] = $todolist;
         }
         function remove(int $number): bool{
