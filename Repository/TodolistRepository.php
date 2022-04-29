@@ -1,39 +1,42 @@
 <?php
 
+
 namespace Repository{
     use Entity\Todolist;
     
     interface TodolistRepository{
-        function save(Todolist $todolist): void;
-        function remove(int $number): bool;
-        function findAll():array;
+        public function findAll(): array;
+        public function save(Todolist $todo):void;
+        public function remove(int $id): bool;
     }
-    
+
+
     class TodolistRepositoryImpl implements TodolistRepository{
+        public array $todolist = [];
 
-        private  array $todolist = array();
+        public function save(Todolist $todo):void{
+            $lastIdx = sizeof($this->todolist) + 1;
 
-        function findAll():array{
-            return $this->todolist;
+            $this->todolist[$lastIdx] = $todo;
         }
-        function save(Todolist $todolist): void{
-            // menyiman todo yang dimasukkan ke ahir dari elemen array
-            $item = sizeof($this->todolist) + 1; //variabel temporary
-            $this->todolist[$item] = $todolist;
-        }
-        function remove(int $number): bool{
-            if($number > sizeof($this->todolist)){
+
+        public function remove(int $id):bool{
+            if($id > sizeof($this->todolist)){
                 return false;
             }else{
-
-                // menggeser todo tang berada pada posisi setelah todo yang kehapus ke depan
-                for($i = $number; $i< sizeof($this->todolist);$i++){
-                    $this->todolist[$i]= $this->todolist[$i + 1];
+                for($i = $id ; $i <= sizeof($this->todolist); $i++){
+                    $this->todolist[$i] = $this->todolist[$i + 1];
+                    
                 }
                 unset($this->todolist[sizeof($this->todolist)]);
                 return true;
             }
         }
+
+        public function findAll():array{
+            return $this->todolist;
+        }
     }
+
 
 }

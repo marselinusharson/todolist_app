@@ -3,9 +3,8 @@ namespace View{
     use Service\TodolistService;
     use Helper\InputHelper;
     class TodolistView{
-        private TodolistService $todolistService;
 
-        public function __construct(TodolistService $todolistService)
+        public function __construct(private TodolistService $todolistService)
         {
             $this->todolistService = $todolistService;
         }
