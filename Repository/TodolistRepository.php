@@ -24,7 +24,7 @@ namespace Repository{
             if($id > sizeof($this->todolist)){
                 return false;
             }else{
-                for($i = $id ; $i <= sizeof($this->todolist); $i++){
+                for($i = $id ; $i < sizeof($this->todolist); $i++){
                     $this->todolist[$i] = $this->todolist[$i + 1];
                     
                 }
