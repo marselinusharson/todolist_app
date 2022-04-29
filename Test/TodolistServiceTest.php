@@ -26,6 +26,24 @@ function testAddTodolist(): void{
     $todolistService->addTodolist("Belajar PHP");
     $todolistService->addTodolist("Belajar Database");
     $todolistService->showTodolist();
-
+    
 }
-testAddTodolist();
+// testAddTodolist();
+
+function testRemoveTodolist():void{
+    $todolistRepository =  new TodolistRepositoryImpl();
+    $todolistService = new TodolistServiceImpl($todolistRepository);
+    
+    $todolistService->addTodolist("main bola");
+    $todolistService->addTodolist("Belajar PHP");
+    $todolistService->addTodolist("Belajar Database");
+    $todolistService->addTodolist("Belajar Javascript Object Oriented Programing");
+    $todolistService->addTodolist("Belajar Mencintaimu");
+    $todolistService->showTodolist();
+    $todolistService->removeTodolist(1);
+    $todolistService->showTodolist();
+    $todolistService->removeTodolist(5);
+    $todolistService->showTodolist();
+}
+
+testRemoveTodolist();

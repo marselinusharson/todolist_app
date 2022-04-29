@@ -31,9 +31,9 @@ namespace Service{
         }
         public function removeTodolist(int $number): void{
             if($this->todolistRepository->remove($number)){
-                echo "SUKSES MENGHAPUS TODOLIST".PHP_EOL;
+                echo "SUKSES MENGHAPUS TODOLIST ke-$number".PHP_EOL;
             }else{
-                echo "GAGAL MENGHAPUS TODOLIST".PHP_EOL;
+                echo "GAGAL MENGHAPUS TODOLIST KE-$number".PHP_EOL;
 
             }
 
