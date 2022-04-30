@@ -1,7 +1,7 @@
 <?php
 namespace Database{
     use \PDO;
-    class DatabaseConection{
+    class DatabaseConnection{
         static function getConnection():\PDO{
             $host = 'localhost';
             $port = 3306;
@@ -9,7 +9,7 @@ namespace Database{
             $username = "root";
             $password = '';
 
-            return \PDO("mysql:host=$host:port=$port;dbname=$dbName",$username,$password);
+            return new \PDO("mysql:host=$host:$port;dbname=$dbName",$username,$password);
         }
     }
 }

@@ -1,38 +1,59 @@
 <?php
-
-
-namespace Repository{
-    use Entity\Todolist;
-    interface TodolistRepository{
-        public function findAll():array;
-        public function save(Todolist $todo):void;
-        public function remove(int $idx):bool;
-    }
-    
-    
-    class TodolistRepositoryImpl implements TodolistRepository{
-
-        private array $todolist = [];
-
-        public function findAll():array{
-            return $this->todolist;
-
+ namespace Repository{
+     use Model\Todolist;
+     interface TodolistRepo{
+         public function save(Todolist $todo):void;
+         public function remove(int $id):bool;
+         public function findAll():array;
         }
-        public function save(Todolist $todo):void{
-            $lastIdx = sizeof($this->todolist) + 1 ;
-            $this->todolist[$lastIdx] = $todo;
-        }
-        public function remove(int $idx):bool{
-            if($idx > sizeof($this->todolist)){
-                return false;
-            }else{
-                for($i = $idx; $i< sizeof($this->todolist);$i++){
-                    $this->todolist[$i] = $this->todolist[$i + 1];
-                }
-                unset($this->todolist[sizeof($this->todolist)]);
-                return true;
+
+     class TodolistRepoImpl implements TodolistRepo{
+         public function __construct(private \PDO $conn){
+
+         }
+         private array $todolist = [];
+         public function findAll():array{
+            $sql = "SELECT id, todo FROM todolist";
+            $statement = $this->conn->prepare($sql);
+            $statement->execute();
+
+            $result = [];
+            foreach($statement as $row){
+                $todolist = new Todolist();
+                $todolist->setId($row['id']);
+                $todolist->setTodo($row['todo']);
+                $result[]= $todolist;
             }
-        }
-        
-    }
-}
+            return $result;
+         }
+         public function save(Todolist $todo):void{
+            $sql = "INSERT INTO todolist (todo) VALUES(?)";
+            $statement = $this->conn->prepare($sql);
+
+            $success = $statement->execute([$todo->getTodo()]);
+            if($success){
+                echo "GAGAL MENAMBAH TODO".PHP_EOL;
+                echo "BERHASIL MENAMBAH TODO".PHP_EOL;
+            }
+         }
+         public function remove(int $id):bool{
+             $sql = "SELECT id FROM todolist WHERE id = ?";
+             $statement = $this->conn->prepare($sql);
+             $statement->execute([$id]);
+             if ($statement->fetch()){
+                 $sql = "DELETE FROM todolist WHERE id = ?";
+                 $statement = $this->conn->prepare($sql);
+                 $statement->execute([$id]);
+
+                return true;
+             }else{
+
+                 return false;
+             }
+
+         }
+     }
+ }
+
+
+?>
