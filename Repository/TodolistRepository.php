@@ -32,8 +32,10 @@
 
             $success = $statement->execute([$todo->getTodo()]);
             if($success){
-                echo "GAGAL MENAMBAH TODO".PHP_EOL;
                 echo "BERHASIL MENAMBAH TODO".PHP_EOL;
+            }else{
+
+                echo "GAGAL MENAMBAH TODO".PHP_EOL;
             }
          }
          public function remove(int $id):bool{

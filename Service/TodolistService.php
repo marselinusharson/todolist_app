@@ -31,7 +31,7 @@
                 if($success){
                     echo "Berhasil menghapus Todo id-$id".PHP_EOL;
                 }else{
-                    echo "Gagal menghapus Todo id-$id".PHP_EOL;
+                    echo "GAGAL!! Tidak ada todo dengan id $id".PHP_EOL;
 
                 }
             }
