@@ -15,8 +15,10 @@ namespace Service{
         }
 
         public function showTodolist():void{
-            echo "TODOLIST:".PHP_EOL;
             $todolist = $this->todolistRepository->findAll();
+            if(sizeof($todolist) > 0){
+                echo "TODOLIST:".PHP_EOL;
+            }
             foreach($todolist as $idx=>$todo){
                 echo $idx . "." . $todo->getTodo().PHP_EOL;
             }
