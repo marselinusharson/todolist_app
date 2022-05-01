@@ -25,34 +25,43 @@
                 $result[]= $todolist;
             }
             return $result;
-         }
-         public function save(Todolist $todo):void{
-            $sql = "INSERT INTO todolist (todo) VALUES(?)";
-            $statement = $this->conn->prepare($sql);
-
-            $success = $statement->execute([$todo->getTodo()]);
-            if($success){
-                echo "BERHASIL MENAMBAH TODO".PHP_EOL;
-            }else{
-
-                echo "GAGAL MENAMBAH TODO".PHP_EOL;
+        }
+        public function save(Todolist $todo):void{
+            try{
+                $sql = "INSERT INTO todolist (todo) VALUES(?)";
+                $statement= $this->conn->prepare($sql);
+                $statement_execute = $statement->execute([$todo->getTodo()]);
+                
+                if($statement_execute){
+                    $_SESSION['message'] = "Inserted Successfully";
+                    header("Location: /app.php");
+                    exit();
+                }else{
+                    $_SESSION['message'] = "Not Inserted";
+                    header("Location: /app.php");
+                    exit();
+                }
+    
+            }catch(PDOException $e){
+                echo $e->getMessage();
             }
+       
          }
          public function remove(int $id):bool{
-             $sql = "SELECT id FROM todolist WHERE id = ?";
-             $statement = $this->conn->prepare($sql);
-             $statement->execute([$id]);
-             if ($statement->fetch()){
-                 $sql = "DELETE FROM todolist WHERE id = ?";
-                 $statement = $this->conn->prepare($sql);
-                 $statement->execute([$id]);
-
-                return true;
-             }else{
-
-                 return false;
-             }
-
+           try{
+                $sql = "DELETE FROM todolist WHERE id = ?";
+                $statement= $this->conn->prepare($sql);
+                $sql_execute = $statement->execute([$id]);
+                
+                if($sql_execute){
+                    return true;
+                }else{
+                    return false;
+                }
+    
+            }catch(PDOException $e){
+                echo $e->getMessage();
+            }
          }
      }
  }

@@ -7,50 +7,34 @@ namespace View{
         public function __construct(private TodolistService $todolistService){
 
         }
-        function showTodolist():void{
-
-            while(true){
-                $this->todolistService->showTodolist();
-
-                echo "MENU".PHP_EOL;
-                echo "[1] Add Todo".PHP_EOL;
-                echo "[2] Remove Todo".PHP_EOL;
-                echo "[x] Exit".PHP_EOL;
-                $select = InputHelper::input("Select");
-
-                if($select == '1'){
-                    $this->addTodolist();
-                }else if($select == '2'){
-                    $this->removeTodolist();
-                    
-                }else if($select == 'x'){
-                    break;
-                }else{
-                    echo "Warning! Input not macth".PHP_EOL;
-                }
-
+        function showTodolist():void{?>
+            <div class="container">
+                <form class="from-group mb-2" method="post">
+                    <input class="form-control" name='todo' placeholder="new todo.." type="text">
+                    <button class="btn btn-primary mt-2" type="submit" name="add_todo">Add Todo</button>
+                </form>
+                <ul class="list-group">
+                    <?php $this->todolistService->showTodolist();  ?>
+                </ul>
+            </div>
+        <?php 
+            if(isset($_POST['delete_todo'])){
+                $this->removeTodolist();
             }
-            echo "\nSAMPAI JUMPA".PHP_EOL;
+
+            if(isset($_POST['todo'])){
+                $this->addTodolist();
+            }
         }
+
         function addTodolist():void{
-            echo "ADD TODO".PHP_EOL;
-            $todo = InputHelper::input("Input todo,[x] for cancel");
-            if($todo == 'x'){
-                echo "Cancel add Todo".PHP_EOL;
-            }else{
+            $todo =\htmlspecialchars( $_POST['todo']);
                 $this->todolistService->addTodolist($todo);
-            }
         }
         
         function removeTodolist():void{
-            echo "REMOVE TODO".PHP_EOL;
-            $id = InputHelper::input("Input id todo, [x] for cancel:");
-            
-            if($id == 'x'){
-                echo "Cancel remove Todo".PHP_EOL;
-            }else{
-                $this->todolistService->removeTodolist($id);
-            }
+            $id=htmlspecialchars($_POST['delete_todo']);
+            $this->todolistService->removeTodolist($id);
         }
     }
 }

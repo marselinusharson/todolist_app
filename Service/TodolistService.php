@@ -14,12 +14,17 @@
             }
             public function showTodolist():void{
                 $todolist = $this->todolistRepository->findAll();
-                if(sizeof($todolist) > 0){
-                    echo "TODOLIST:".PHP_EOL;
-                }
-                foreach($todolist as $todo){
-                    echo $todo->getId().".".$todo->getTodo().PHP_EOL;
-                }
+                foreach($todolist as $todo):?>
+                    <li class="list-group-item">
+                        <h6>
+                            <?=$todo->getTodo() ?>
+                            <form class="float-end" method="post">
+                                <button class="btn btn-danger" name="delete_todo" type="submit" value="<?= $todo->getId()?>">Done</button>
+                            </form>
+                        </h6>
+                    </li>
+                <?php endforeach ?>
+            <?php
             }
             public function addTodolist(string $todo):void{
                 $todolist = new Todolist($todo);
@@ -29,10 +34,13 @@
             public function removetodolist(int $id):void{
                 $success = $this->todolistRepository->remove($id);
                 if($success){
-                    echo "Berhasil menghapus Todo id-$id".PHP_EOL;
+                    $_SESSION['message'] = "Delete Successfully";
+                    header("Location: /app.php");
+                    exit();
                 }else{
-                    echo "GAGAL!! Tidak ada todo dengan id $id".PHP_EOL;
-
+                    $_SESSION['message'] = "Not Deleted";
+                    header("Location: /app.php");
+                    exit();
                 }
             }
         }
